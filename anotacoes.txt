@@ -6,6 +6,10 @@
 - Maven
 - Windows
 
+** Documentacao
+- sobre os status code [ https://developer.mozilla.org/pt-BR/docs/Web/HTTP/Status ]
+- hamcrest [ http://hamcrest.org/JavaHamcrest/javadoc/1.3/org/hamcrest/Matchers.html ]
+
  
 ** Anotações:
 
