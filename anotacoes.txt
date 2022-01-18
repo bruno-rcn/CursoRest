@@ -26,15 +26,22 @@ restapi.wcaquino.me -> endereço
 
 
 
+- Teste com junit precisa ter acima do metodo a tag @Test, deve ser publico, não pode retornar nada
+
+	@Test
+	public void testeOlaMundo() {
+		
+	}
 
 
+- Falha no junit é quando vem de um assertion - falha de varificacao
+executa o teste mas da errado o resultado final
+
+- Erro é qualuqer outra coisa fora de lugar
+nem consegue executar o teste
 
 
-
-
-
-
-
+- Atalho do eclipse para import statico é ctrl+shift+m
 
 
 
