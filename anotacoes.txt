@@ -1,1 +1,40 @@
-requisito do rest assurese é ter pelo menos o java 8
+- Testando API Rest com REST-Assured
+
+** Ferramentas
+- Java
+- Eclipse
+- Maven
+- Windows
+
+ 
+** Anotações:
+
+- requisito do rest assured é ter pelo menos o java 8
+
+- divisao da url: http://restapi.wcaquino.me:8080/ola (pode ir sem a porta)
+
+http:// -> protocolo da requisicao
+
+restapi.wcaquino.me -> endereço
+
+:8080 -> porta
+
+/ola - recurso
+
+
+- é realizado uma requisição e tem de volta um response
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
