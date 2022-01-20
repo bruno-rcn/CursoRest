@@ -2,6 +2,7 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
 import java.util.Arrays;
@@ -42,7 +43,7 @@ public class testeJunit {
 		Assert.assertTrue(request.getBody().asString().equals("Ola Mundo!"));
 		Assert.assertTrue(request.statusCode() == 200);
 		
-		// primeiro parametro é o do codigo e o segundo é o que vem da aplicacao
+		// primeiro parametro vem da aplicacao/historia/cucumber - segunparamentro vem do codigo
 		Assert.assertEquals(request.statusCode(), 200);
 	}
 	
@@ -70,7 +71,7 @@ public class testeJunit {
 	@Test
 	public void testeHamcrest() {
 		
-		// primeiro parametro vem da aplicacao e o segundo é o do codigo
+		// primeiro parametro vem do codigo - e o segundo vem da aplicacao
 		Assert.assertThat("Maria", Matchers.is("Maria"));
 		Assert.assertThat(128, Matchers.is(128));
 		Assert.assertThat(128, Matchers.isA(Integer.class));
@@ -84,6 +85,18 @@ public class testeJunit {
 		assertThat(impares, Matchers.hasItem(1));
 		assertThat(impares, Matchers.hasItems(3, 5));
 		
+	}
+	
+	@Test
+	public void validarOBody() {
+		
+		given()
+		.when()
+			.get("https://restapi.wcaquino.me/ola")
+		.then()
+			.statusCode(200)
+			.body(is("Ola Mundo!"))
+			.body(Matchers.containsString("Mundo"));
 	}
 
 }
