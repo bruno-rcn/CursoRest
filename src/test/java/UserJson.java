@@ -58,7 +58,8 @@ public class UserJson {
 		;
 	}
 	
-	// Primeiro nivel do Json
+	// Segundo nivel do Json
+
 	@Test
 	public void validarCampos3() {
 		
@@ -69,6 +70,24 @@ public class UserJson {
 			.statusCode(200)
 			.body("name", Matchers.containsString("Joaquina"))
 			.body("endereco.rua", is("Rua dos bobos"))
+		;
+	}
+	
+	
+	// Lista Json
+	@Test
+	public void validarCampos4() {
+		
+		given()
+		.when()
+			.get("https://restapi.wcaquino.me/users/3")
+		.then()
+			.statusCode(200)
+			.body("name", Matchers.containsString("Ana"))
+			.body("filhos", Matchers.hasSize(2))
+			.body("filhos[0].name", is("Zezinho"))
+			.body("filhos[1].name", is("Luizinho"))
+			.body("filhos.name", Matchers.hasItem("Zezinho"))
 		;
 	}
 	
