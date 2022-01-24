@@ -10,6 +10,7 @@ import java.util.List;
 
 import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
+import org.hamcrest.core.StringStartsWith;
 import org.hamcrest.text.StringContainsInOrder;
 import org.junit.Assert;
 import org.junit.Test;
@@ -43,7 +44,7 @@ public class testeJunit {
 		Assert.assertTrue(request.getBody().asString().equals("Ola Mundo!"));
 		Assert.assertTrue(request.statusCode() == 200);
 		
-		// primeiro parametro vem da aplicacao/historia/cucumber - segunparamentro vem do codigo
+		// primeiro parametro vem da aplicacao/historia/cucumber - segundo paramentro vem do codigo
 		Assert.assertEquals(request.statusCode(), 200);
 	}
 	
@@ -68,14 +69,16 @@ public class testeJunit {
 			.statusCode(200);
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Test
 	public void testeHamcrest() {
 		
 		// primeiro parametro vem do codigo - e o segundo vem da aplicacao
 		Assert.assertThat("Maria", Matchers.is("Maria"));
 		Assert.assertThat(128, Matchers.is(128));
-		Assert.assertThat(128, Matchers.isA(Integer.class));
+		Assert.assertThat(128.5f, Matchers.isA(Float.class));
 		Assert.assertThat(128d, Matchers.greaterThan(120d)); // maior que
+		Assert.assertThat(128d, Matchers.lessThan(130d)); // maior que
 		
 		// Utilizando o import statico em assert e matcher
 		List<Integer> impares = Arrays.asList(1, 3, 5, 7);
@@ -84,6 +87,12 @@ public class testeJunit {
 		assertThat(impares, containsInAnyOrder(5, 3, 7, 1));
 		assertThat(impares, Matchers.hasItem(1));
 		assertThat(impares, Matchers.hasItems(3, 5));
+		
+		Assert.assertThat("Maria", Matchers.is(Matchers.not("joao")));
+		Assert.assertThat("Maria", Matchers.not("Bruno"));
+		Assert.assertThat("Maria", Matchers.anyOf(is("Maria"), is("Bruno")));
+		Assert.assertThat("Bruno", Matchers.anyOf(is("Maria"), is("Bruno")));
+//		Assert.assertThat("Maria", Matchers.allOf(Matchers.startsWith("Mar")), Matchers.endsWith("ria"), Matchers.containsString("ari"));
 		
 	}
 	
@@ -96,7 +105,9 @@ public class testeJunit {
 		.then()
 			.statusCode(200)
 			.body(is("Ola Mundo!"))
-			.body(Matchers.containsString("Mundo"));
+			.body(Matchers.containsString("Mundo"))
+			.body(is(Matchers.not(null)));
 	}
+	
 
 }

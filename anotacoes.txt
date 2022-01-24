@@ -1,6 +1,6 @@
-https://restapi.wcaquino.me/ola
+URL da aplicacao: https://restapi.wcaquino.me/ola
 
-- Testando API Rest com REST-Assured
+-> Testando API Rest com REST-Assured
 
 ** Ferramentas
 - Java
@@ -27,9 +27,8 @@ restapi.wcaquino.me -> endereço
 
 /ola - recurso
 
-
-- é realizado uma requisição e tem de volta um response
-
+porta padrão HTTP - :80
+porta padrão HTTPS - :443
 
 
 - Teste com junit precisa ter acima do metodo a tag @Test, deve ser publico, não pode retornar nada
@@ -44,7 +43,7 @@ restapi.wcaquino.me -> endereço
 executa o teste mas da errado o resultado final
 
 - Erro é qualuqer outra coisa fora de lugar
-nem consegue executar o teste
+não consegue executar o teste
 
 
 - Atalho do eclipse para import statico é ctrl+shift+m
