@@ -49,4 +49,6 @@ não consegue executar o teste
 - Atalho do eclipse para import statico é ctrl+shift+m
 
 
-
+- Quando o json possui uma lista na raiz, para acessar os atributos pode ser colocando um $ no começo do body (ex: .body("$", ...)) ou pode deixar
+em branco e colocar o atributo que quer acessar (ex: .body("name", ...)), desse jeito, vai retornar todos os atributos que tiver na lista do
+que foi colocado para pesquisa

@@ -1,6 +1,8 @@
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.is;
 
+import java.util.Arrays;
+
 import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.Test;
@@ -88,6 +90,22 @@ public class UserJson {
 			.body("filhos[0].name", is("Zezinho"))
 			.body("filhos[1].name", is("Luizinho"))
 			.body("filhos.name", Matchers.hasItem("Zezinho"))
+		;
+	}
+	
+	// Lista Json na raiz
+	@Test
+	public void validarCampos5() {
+		
+		given()
+		.when()
+			.get("https://restapi.wcaquino.me/users")
+		.then()
+			.statusCode(200)
+			.body("$", Matchers.hasSize(3))
+			.body("name", Matchers.hasItems("João da Silva", "Maria Joaquina", "Ana Júlia"))
+			.body("age[0]", is(30))
+			.body("filhos.name", Matchers.hasItem(Arrays.asList("Zezinho", "Luizinho")))
 		;
 	}
 	
