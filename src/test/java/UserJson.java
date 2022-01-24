@@ -1,4 +1,5 @@
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.is;
 
 import org.hamcrest.Matchers;
 import org.junit.Assert;
@@ -11,6 +12,8 @@ import io.restassured.response.Response;
 
 public class UserJson {
 
+	// Primeiro nivel do Json
+	
 	@Test
 	public void validarCampos() {
 		
@@ -54,5 +57,20 @@ public class UserJson {
 			.body("error", Matchers.is("Usuário inexistente"))
 		;
 	}
+	
+	// Primeiro nivel do Json
+	@Test
+	public void validarCampos3() {
+		
+		given()
+		.when()
+			.get("https://restapi.wcaquino.me/users/2")
+		.then()
+			.statusCode(200)
+			.body("name", Matchers.containsString("Joaquina"))
+			.body("endereco.rua", is("Rua dos bobos"))
+		;
+	}
+	
 	
 }
