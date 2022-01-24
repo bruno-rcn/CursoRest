@@ -52,3 +52,10 @@ não consegue executar o teste
 - Quando o json possui uma lista na raiz, para acessar os atributos pode ser colocando um $ no começo do body (ex: .body("$", ...)) ou pode deixar
 em branco e colocar o atributo que quer acessar (ex: .body("name", ...)), desse jeito, vai retornar todos os atributos que tiver na lista do
 que foi colocado para pesquisa
+
+
+.body("age.findAll{it <= 25}.size()", is(2))
+
+Aqui ele vai buscar todos os elementos que tem com age
+vai pegar todos os que possuem a condicao do it, no caso, menos ou igual a 25
+
