@@ -59,3 +59,5 @@ que foi colocado para pesquisa
 Aqui ele vai buscar todos os elementos que tem com age
 vai pegar todos os que possuem a condicao do it, no caso, menos ou igual a 25
 
+
+o retorno do extract(), fica armaenado no given

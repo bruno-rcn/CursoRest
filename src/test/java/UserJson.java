@@ -1,11 +1,15 @@
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.is;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import org.hamcrest.Matchers;
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
+
+import com.sun.xml.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 
 import io.restassured.RestAssured;
 import io.restassured.http.Method;
@@ -13,6 +17,11 @@ import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 
 public class UserJson {
+	
+	@BeforeClass
+	public static void setup() {
+		RestAssured.baseURI = "https://restapi.wcaquino.me";
+	}
 
 	// Primeiro nivel do Json
 	
@@ -21,7 +30,7 @@ public class UserJson {
 		
 		given()
 		.when()
-			.get("https://restapi.wcaquino.me/users/1")
+			.get("/users/1")
 		.then()
 			.statusCode(200)
 			.body("id", Matchers.is(1))
@@ -35,7 +44,7 @@ public class UserJson {
 	@Test
 	public void validarCampos2() {
 		
-		Response resposta = RestAssured.request(Method.GET, "https://restapi.wcaquino.me/users/1");
+		Response resposta = RestAssured.request(Method.GET, "/users/1");
 		
 		//path
 		System.out.println(resposta.path("id"));
@@ -53,7 +62,7 @@ public class UserJson {
 		
 		given()
 		.when()
-			.get("https://restapi.wcaquino.me/users/5")
+			.get("/users/5")
 		.then()
 			.statusCode(404)
 			.body("error", Matchers.is("Usuário inexistente"))
@@ -67,7 +76,7 @@ public class UserJson {
 		
 		given()
 		.when()
-			.get("https://restapi.wcaquino.me/users/2")
+			.get("/users/2")
 		.then()
 			.statusCode(200)
 			.body("name", Matchers.containsString("Joaquina"))
@@ -82,7 +91,7 @@ public class UserJson {
 		
 		given()
 		.when()
-			.get("https://restapi.wcaquino.me/users/3")
+			.get("/users/3")
 		.then()
 			.statusCode(200)
 			.body("name", Matchers.containsString("Ana"))
@@ -99,7 +108,7 @@ public class UserJson {
 		
 		given()
 		.when()
-			.get("https://restapi.wcaquino.me/users")
+			.get("/users")
 		.then()
 			.statusCode(200)
 			.body("$", Matchers.hasSize(3))
@@ -117,7 +126,7 @@ public class UserJson {
 		
 		given()
 		.when()
-			.get("https://restapi.wcaquino.me/users")
+			.get("/users")
 		.then()
 			.statusCode(200)
 			.body("$", Matchers.hasSize(3))
@@ -135,6 +144,22 @@ public class UserJson {
 			.body("salary.findAll{it != null}.sum()", is(Matchers.closeTo(3734.5678f, 0.001)))
 			.body("salary.findAll{it != null}.sum()", Matchers.allOf(Matchers.greaterThan(3000d), Matchers.lessThan(5000d)))
 		;
+	}
+	
+	@Test
+	public void jsonPathComJava() {
+		ArrayList<String> names =
+		given()
+		.when()
+			.get("/users")
+		.then()
+			.statusCode(200)
+			.extract().path("name.findAll{it.startsWith('Maria')}")
+		;
+		
+		Assert.assertEquals(1, names.size());
+		Assert.assertTrue(names.get(0).equalsIgnoreCase("mArIa JoaquinA"));
+		Assert.assertEquals(names.get(0).toUpperCase(), "maria joaquina".toUpperCase());
 	}
 	
 	
