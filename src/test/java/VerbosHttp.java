@@ -1,8 +1,13 @@
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.hamcrest.Matchers;
+import org.junit.Assert;
 import org.junit.Test;
+
 
 public class VerbosHttp {
 	
@@ -108,6 +113,61 @@ public class VerbosHttp {
 			.statusCode(400)
 			.body("error", is("Registro inexistente"))
 		;
+	}
+	
+	@Test
+	public void salvarUsuarioComMap() {
+		
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("name", "Usuario via map");
+		params.put("age", 25);
+		
+		given()
+			.contentType("application/json")
+			.body(params)
+		.when()
+			.post("https://restapi.wcaquino.me/users")
+		.then()
+			.statusCode(201)
+			.body("id", is(Matchers.notNullValue()))
+			.body("name", is("Usuario via map"))
+			.body("age", is(25))
+		;
+	}
+	
+	@Test
+	public void salvarUsuarioComObjeto() {
+		Usuarios user = new Usuarios("Usuario via objeto", 35);
+		
+		given()
+			.contentType("application/json")
+			.body(user)
+		.when()
+			.post("https://restapi.wcaquino.me/users")
+		.then()
+			.statusCode(201)
+			.body("id", is(Matchers.notNullValue()))
+			.body("name", is("Usuario via objeto"))
+			.body("age", is(35))
+		;
+	}
+	
+	@Test
+	public void salvarUsuarioComObjetoJunit() {
+		Usuarios user = new Usuarios("Usuario deserializado", 35);
+		
+		Usuarios usuarioInserido = given()
+			.contentType("application/json")
+			.body(user)
+		.when()
+			.post("https://restapi.wcaquino.me/users")
+		.then()
+			.statusCode(201)
+			.extract().body().as(Usuarios.class)
+		;
+		
+		System.out.println(usuarioInserido);
+		Assert.assertEquals("Usuario deserializado", usuarioInserido.getName());
 	}
 
 }
