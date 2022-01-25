@@ -37,6 +37,9 @@ public class UserJson {
 		ResponseSpecBuilder resBuilder = new ResponseSpecBuilder();
 		resBuilder.expectStatusCode(200);
 		resSpec = resBuilder.build();
+		
+		RestAssured.requestSpecification = reqSpec;
+		RestAssured.responseSpecification = resSpec;
 	}
 
 	// Primeiro nivel do Json
@@ -45,11 +48,9 @@ public class UserJson {
 	public void validarCampos() {
 		
 		given()
-			.spec(reqSpec)
 		.when()
 			.get("/users/1")
 		.then()
-			.spec(resSpec)
 			.body("id", Matchers.is(1))
 			.body("id", Matchers.isA(Integer.class))
 			.body("name", Matchers.containsString("Silva"))
@@ -78,7 +79,6 @@ public class UserJson {
 	public void casoDeErro() {
 		
 		given()
-			.spec(reqSpec)
 		.when()
 			.get("/users/5")
 		.then()
@@ -93,11 +93,9 @@ public class UserJson {
 	public void validarCampos3() {
 		
 		given()
-			.spec(reqSpec)
 		.when()
 			.get("/users/2")
 		.then()
-			.spec(resSpec)
 			.body("name", Matchers.containsString("Joaquina"))
 			.body("endereco.rua", is("Rua dos bobos"))
 		;
@@ -109,11 +107,9 @@ public class UserJson {
 	public void validarCampos4() {
 		
 		given()
-			.spec(reqSpec)
 		.when()
 			.get("/users/3")
 		.then()
-			.spec(resSpec)
 			.body("name", Matchers.containsString("Ana"))
 			.body("filhos", Matchers.hasSize(2))
 			.body("filhos[0].name", is("Zezinho"))
@@ -127,11 +123,9 @@ public class UserJson {
 	public void validarCampos5() {
 		
 		given()
-			.spec(reqSpec)
 		.when()
 			.get("/users")
 		.then()
-			.spec(resSpec)
 			.body("$", Matchers.hasSize(3))
 			.body("name", Matchers.hasItems("João da Silva", "Maria Joaquina", "Ana Júlia"))
 			.body("age[0]", is(30))
@@ -146,11 +140,9 @@ public class UserJson {
 	public void verifiacoesAvancadas() {
 		
 		given()
-			.spec(reqSpec)
 		.when()
 			.get("/users")
 		.then()
-			.spec(resSpec)
 			.body("$", Matchers.hasSize(3))
 			.body("age.findAll{it <= 25}.size()", is(2))
 			.body("age.findAll{it <= 25 && it > 20}.size()", is(1))
@@ -172,11 +164,9 @@ public class UserJson {
 	public void jsonPathComJava() {
 		ArrayList<String> names =
 		given()
-			.spec(reqSpec)
 		.when()
 			.get("/users")
 		.then()
-			.spec(resSpec)
 			.extract().path("name.findAll{it.startsWith('Maria')}")
 		;
 		
