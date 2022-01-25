@@ -86,5 +86,28 @@ public class VerbosHttp {
 			.body("age", is(80))
 		;
 	}
+	
+	@Test
+	public void deletarUsuario() {
+		
+		given()
+		.when()
+			.delete("https://restapi.wcaquino.me/users/1")
+		.then()
+			.statusCode(204)
+		;
+	}
+	
+	@Test
+	public void usuarioInexistente() {
+		
+		given()
+		.when()
+			.delete("https://restapi.wcaquino.me/users/1000")
+		.then()
+			.statusCode(400)
+			.body("error", is("Registro inexistente"))
+		;
+	}
 
 }
