@@ -62,3 +62,5 @@ vai pegar todos os que possuem a condicao do it, no caso, menos ou igual a 25
 
 
 o retorno do extract(), fica armaenado no given
+
+URL generica é apenas para o POST. O PUT e o DELETE precisam de uma URL especifica

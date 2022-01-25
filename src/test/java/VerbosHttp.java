@@ -36,5 +36,55 @@ public class VerbosHttp {
 			.body("error", is("Name é um atributo obrigatório"))
 		;
 	}
+	
+	@Test
+	public void deveAlterarUsuario() {
+		
+		given()
+			.body("{\"name\": \"Usuario alterado\", \"age\": 80}")
+			.contentType("application/json")
+		.when()
+			.put("https://restapi.wcaquino.me/users/1")
+		.then()
+			.statusCode(200)
+			.body("id", is(1))
+			.body("name", is("Usuario alterado"))
+			.body("age", is(80))
+		;
+	}
+	
+	@Test
+	public void urlParametrizada() {
+		
+		given()
+			.body("{\"name\": \"Usuario alterado\", \"age\": 80}")
+			.contentType("application/json")
+		.when()
+			.put("https://restapi.wcaquino.me/{entidade}/{userId}", "users", "1")
+		.then()
+			.statusCode(200)
+			.body("id", is(1))
+			.body("name", is("Usuario alterado"))
+			.body("age", is(80))
+		;
+	}
+	
+	@Test
+	public void urlParametrizada2() {
+		
+		given()
+			.body("{\"name\": \"Usuario alterado\", \"age\": 80}")
+			.contentType("application/json")
+			.pathParam("entidade", "users")
+			.pathParam("userId", 1)
+		.when()
+			.put("https://restapi.wcaquino.me/{entidade}/{userId}")
+		.then()
+			.statusCode(200)
+			.body("id", is(1))
+			.body("name", is("Usuario alterado"))
+			.body("age", is(80))
+		;
+	}
 
 }
